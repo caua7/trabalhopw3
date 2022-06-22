@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>html com backend</title>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        th, td {
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #D6EEEE;
+        }
+        </style>
+</head>
+<body>
+    <div>
+        <input type="text" id="txtBusca" placeholder="Buscar times">
+
+    </div>
+   
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Estádio</th>
+                <th>Capacidade Estádio</th>
+                <th>Nº Títulos</th>
+            </tr>
+        </thead>
+        <tbody id="resultado">
+            
+        </tbody>
+    </table>
+
+    <script src="js/jquery.js"></script>
+    <script>             
+        $('#txtBusca').keyup(function(){
+      
+            let busca = {
+                "busca": $("#txtBusca").val()
+            } 
+            busca = JSON.stringify(busca);
+
+            $.post("/backendbackend/clube/index.php",busca,function(resposta){
+                let TabelaDeClubes ='';
+                if(resposta.result){
+                resposta.valores.forEach(clube => {
+                   TabelaDeClubes +=`<tr>
+                                         <td>${clube.nome}</td>
+                                         <td>${clube.estadio}</td>
+                                         <td>${clube.capacidade_estadio}</td>
+                                         <td>${clube.num_titulos}</td>
+                                    </tr>`;
+                });
+                $("#resultado").html(TabelaDeClubes);
+                }
+            });
+
+        });
+        
+    </script> 
+</body>
+</html>
