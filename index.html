@@ -50,7 +50,7 @@
             } 
             busca = JSON.stringify(busca);
 
-            $.post("/backendbackend/clube/index.php",busca,function(resposta){
+            $.post("http://localhost:8080/trabalhopw3/backend/clube/",busca,function(resposta){
                 let TabelaDeClubes ='';
                 if(resposta.result){
                 resposta.valores.forEach(clube => {
@@ -64,6 +64,7 @@
                 $("#resultado").html(TabelaDeClubes);
                 }
             });
+            
 
         });
         
